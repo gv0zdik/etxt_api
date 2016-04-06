@@ -65,11 +65,11 @@ class Etxt {
     private function createSing($method)
     {
         $params = ['method' => $method, 'token'=> $this->token];
-		$str_params = '';
-		foreach ($params as $key => $val)
-    		$str_params .= $key.'='.$val;
+        $str_params = '';
+        foreach ($params as $key => $val)
+        	$str_params .= $key.'='.$val;
 
-		$this->sing = md5($str_params.md5($this->api_pass.'api-pass'));
+        $this->sing = md5($str_params.md5($this->api_pass.'api-pass'));
     }
 
     /**
