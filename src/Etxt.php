@@ -43,14 +43,15 @@ class Etxt {
      */
     public function api($method, $params = [])
     {
-        $this->createSing($method, $params);
+        $this->createSing($method);
 
         curl_setopt($this->ch, CURLOPT_URL, self::JSON_URL."?token=".$this->token."&method=".$method."&sign=".$this->sing);
         curl_setopt($this->ch, CURLOPT_HEADER, 0);
-        curl_setopt($this->ch, CURLOPT_RETURNTRANSFER,1);
-        curl_setopt($this->ch, CURLOPT_TIMEOUT, 3);
+        curl_setopt($this->ch, CURLOPT_VERBOSE, 1);
         curl_setopt($this->ch, CURLOPT_POST, 1);
         curl_setopt($this->ch, CURLOPT_POSTFIELDS, http_build_query($params));
+        curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($this->ch, CURLOPT_TIMEOUT, 5);
         $json = curl_exec($this->ch);
         return json_decode($json, true);
     }
@@ -61,11 +62,9 @@ class Etxt {
      * @param   array $params
      * @return  string
      */
-    private function createSing($method, $params = [])
+    private function createSing($method)
     {
-        $params['method'] = $method;
-        $params['token'] = $this->token;
-        ksort($params);
+        $params = ['method' => $method, 'token'=> $this->token];
 		$str_params = '';
 		foreach ($params as $key => $val)
     		$str_params .= $key.'='.$val;
